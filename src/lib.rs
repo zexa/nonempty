@@ -1003,6 +1003,14 @@ impl<T> From<(T, Vec<T>)> for NonEmpty<T> {
     }
 }
 
+impl<T> TryFrom<Vec<T>> for NonEmpty<T> {
+    type Error = ();
+
+    fn try_from(value: Vec<T>) -> Result<Self, Self::Error> {
+        Self::from_vec(value).ok_or(())
+    }
+}
+
 impl<T> IntoIterator for NonEmpty<T> {
     type Item = T;
     type IntoIter = iter::Chain<iter::Once<T>, vec::IntoIter<Self::Item>>;
