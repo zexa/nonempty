@@ -1235,6 +1235,15 @@ mod tests {
         assert_eq!(numbers, nonempty![1, 2, 3]);
     }
 
+    #[test]
+    fn test_try_into() {
+        assert_eq!(vec![1].try_into(), Ok(nonempty![1]));
+        assert_eq!(
+            Vec::<i32>::new().try_into() as Result<NonEmpty<i32>, ()>,
+            Err(())
+        );
+    }
+
     #[cfg(feature = "serialize")]
     mod serialize {
         use crate::NonEmpty;
